@@ -1,8 +1,9 @@
 "use client"; // required for client-side navigation
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-import Navbar from "./components/layout/navbar";
+
 export default function HomePage() {
   const router = useRouter();
 
@@ -12,8 +13,8 @@ export default function HomePage() {
 
   return (
     <div>
-      <Navbar />
-      <h1>Home Page</h1>
+      <h1 className="text-3xl font-bold underline">Home Pageeeeeeeeeeeee</h1>
+      <Link href="/profile">Profile</Link>
       <button onClick={goToAbout}>Go to About</button>
     </div>
   );

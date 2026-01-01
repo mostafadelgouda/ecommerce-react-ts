@@ -1,6 +1,8 @@
 "use client"; // required for client-side navigation
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 
 export default function HomePage() {
     const router = useRouter();
@@ -11,7 +13,8 @@ export default function HomePage() {
 
     return (
         <div>
-            <h1>Home Page</h1>
+            <h1>Home Pageeeeeeeeeeeee</h1>
+            <Link href="/profile">Profile</Link>
             <button onClick={goToAbout}>Go to About</button>
         </div>
     );
