@@ -21,6 +21,9 @@ module.exports = {
         "header-topbar-bg": "#f5f5f5",
         "header-topbar-border": "#e1e1e1",
         "header-topbar-text": "#000000",
+        
+        
+
 
         // Labels
         "label-text": "#ffffff",
@@ -28,6 +31,8 @@ module.exports = {
         "label-hot": "#5369e3",
         "label-sale": "#34bf49",
         "label-other": "#848484",
+        "label-subtitle": "#a76111",
+        "label-subtitle-tracking": "0.3em",
 
         // Reviews (jdgm)
         "review-primary": "#A76111",
