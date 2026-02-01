@@ -1,33 +1,61 @@
+
+import ProductItem from "@/app/components/common/ProductItem";
+import Subtitle from "@/app/components/common/SubTitle";
+import Title from "@/app/components/common/Title";
+import CollectionsItem from "@/app/components/layout/CollectionsItem";
+import { apiFetch } from "@/lib/api";
+import Link from "next/link";
 interface PageProps {
-    params: {
-        collectionName: string;
-    };
+    params: Promise<{ collectionName: string }>; // this is fine
+}
+interface CategoriesResponse {
+    message: string;
+    page: number;
+    total_items: number;
+    limit: number;
+    data: Categories[];
+}
+interface Categories {
+    category_id: number;
+    name: string;
+    description: string;
+    image_url: string;
+    created_at: string;
 }
 
 export default async function CollectionPage({ params }: PageProps) {
-    const { collectionName } = params;
+    const { collectionName } = await params; // ✅ await before using
 
-    // Example backend request
-    // const res = await fetch(
-    //     `${process.env.NEXT_PUBLIC_API_URL}/collections/${collectionName}`,
-    //     { cache: 'no-store' }
-    // );
-
-    // const items = await res.json();
+    const data: Categories[] = (await apiFetch(`/api/categories`, {
+        method: "GET",
+    }) as CategoriesResponse).data;
+    console.log(data);
 
     return (
-        <div className="container mx-auto px-6 py-10">
-            <h1 className="text-4xl font-bold mb-8 capitalize">
-                {collectionName.replace(/-/g, " ")}
-            </h1>
+        <>
+            <Title text={collectionName.replace(/-/g, " ")} />
 
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {items.map((item: any) => (
-                    <div key={item.id} className="border rounded-lg p-4">
-                        <h2 className="text-lg font-semibold">{item.name}</h2>
-                    </div>
-                ))}
-            </div> */}
-        </div>
+            <section
+                className="w-full h-[500px] bg-gray-200"
+                style={{
+                    backgroundImage: `url(/assets/pexels-fotoaibe-1743227.jpg)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                }}
+            />
+
+            <section className="p-24">
+                {
+                    data.map((category) => (
+                        <Link key={category.category_id} href={`/collections/${category.name.toLowerCase().replace(/ /g, "-")}`}>
+                            <ProductItem imageUrl={"/assets/pexels-fotoaibe-1743227.jpg"} name={category.name} />
+
+                            <div className="item">{category.name}</div>
+
+                        </Link>
+                    ))
+                }
+            </section>
+        </>
     );
 }

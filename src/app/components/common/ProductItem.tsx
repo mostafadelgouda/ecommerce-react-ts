@@ -2,17 +2,17 @@
 import React from 'react';
 import Image from 'next/image';
 
-interface CollectionsItemProps {
+interface ProductItemProps {
     imageUrl: string;
     name: string;
     clickOperation?: () => void;
 }
 
-const CollectionsItem: React.FunctionComponent<CollectionsItemProps> = ({ imageUrl, name = "", clickOperation }) => {
+const ProductItem: React.FunctionComponent<ProductItemProps> = ({ imageUrl, name = "", clickOperation }) => {
     const [isHovered, setIsHovered] = React.useState(false);
     return (
         <div
-            className="relative w-80 h-80 rounded-full items-center justify-center cursor-pointer overflow-hidden"
+            className="relative w-72 h-96 items-center justify-center cursor-pointer overflow-hidden"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={clickOperation}
@@ -40,4 +40,4 @@ const CollectionsItem: React.FunctionComponent<CollectionsItemProps> = ({ imageU
     );
 };
 
-export default CollectionsItem;
+export default ProductItem;
