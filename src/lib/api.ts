@@ -9,9 +9,11 @@ export async function apiFetch<T>(
     endpoint: string,
     options: RequestOptions = {}
 ): Promise<T> {
-    console.log("___________________________________")
-    console.log(`${process.env.API_URL}${endpoint}`)
-    const res = await fetch(`${process.env.API_URL}${endpoint}`, {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "url";
+    const url = `${baseUrl}${endpoint}`;
+    console.log("API FETCH:", url);
+
+    const res = await fetch(url, {
         method: options.method ?? "GET",
         headers: {
             "Content-Type": "application/json",

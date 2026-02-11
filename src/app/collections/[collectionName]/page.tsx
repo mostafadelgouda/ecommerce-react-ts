@@ -23,16 +23,40 @@ interface Categories {
     created_at: string;
 }
 
-export default async function CollectionPage({ params }: PageProps) {
-    const { collectionName } = await params; // ✅ await before using
+interface ProductsResponse {
+    message: string;
+    page: number;
+    total_items: number;
+    limit: number;
+    data: Products[];
+}
+interface Products {
+    product_id: number;
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+    brand: string;
+    image_url: string;
+    created_at: string;
+}
 
-    const data: Categories[] = (await apiFetch(`/api/categories`, {
+
+export default async function CollectionPage({ params }: PageProps) {
+    const { collectionName } = await params;
+    console.log("_____________________");
+    console.log("Collection Name:", collectionName);
+    const categories: Categories[] = (await apiFetch(`/api/categories`, {
         method: "GET",
     }) as CategoriesResponse).data;
-    console.log(data);
+    // const products: Products[] = (await apiFetch(`/api/products?category=${collectionName}`, {
+    //     method: "GET",
+    // }) as ProductsResponse).data;
+    //console.log(data);
 
     return (
         <>
+
             <Title text={collectionName.replace(/-/g, " ")} />
 
             <section
@@ -43,19 +67,26 @@ export default async function CollectionPage({ params }: PageProps) {
                     backgroundPosition: "center",
                 }}
             />
+            <div className="flex w-full gap-8">
+                <section className="w-1/4">
+                    <Title text="Filters" />
+                </section>
+                <section className="w-3/4 p-24">
+                    {
+                        categories.map((category) => (
+                            <Link key={category.category_id} href={`/collections/${category.name.toLowerCase().replace(/ /g, "-")}`}>
+                                <ProductItem imageUrl={"/assets/pexels-fotoaibe-1743227.jpg"} name={category.name} />
 
-            <section className="p-24">
-                {
-                    data.map((category) => (
-                        <Link key={category.category_id} href={`/collections/${category.name.toLowerCase().replace(/ /g, "-")}`}>
-                            <ProductItem imageUrl={"/assets/pexels-fotoaibe-1743227.jpg"} name={category.name} />
+                                <div className="item">{category.name}</div>
+                                <div className="item">rate</div>
+                                <div className="item">price</div>
 
-                            <div className="item">{category.name}</div>
+                            </Link>
+                        ))
+                    }
+                </section>
+            </div>
 
-                        </Link>
-                    ))
-                }
-            </section>
         </>
     );
 }

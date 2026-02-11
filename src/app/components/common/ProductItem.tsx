@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import Image from 'next/image';
-
+import { ShoppingCart, User, Search, ChevronDown, Heart } from "lucide-react";
 interface ProductItemProps {
     imageUrl: string;
     name: string;
@@ -27,15 +27,28 @@ const ProductItem: React.FunctionComponent<ProductItemProps> = ({ imageUrl, name
                 className={`absolute w-full h-full transform transition-all duration-500 ease-in-out bg-black ${isHovered ? "bg-opacity-50" : "bg-opacity-0"
                     }`}
             ></div>
-            <h2
-                className={`absolute inset-0 flex items-center justify-center
-                    text-white text-3xl font-semibold text-center
-                    max-w-[80%] mx-auto 
-                    transition-all duration-500 ease-in-out
-                    ${isHovered ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-7"}`}
+            <div
+                className={`absolute top-3 right-3 flex flex-col gap-3
+                    transition-all duration-300 ease-out
+                    ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"}
+                `}
             >
-                {name}
-            </h2>
+                <button className="p-2 bg-white/90 text-black rounded-full hover:scale-110 transition">
+                    <ShoppingCart size={18} />
+                </button>
+
+                <button className="p-2 bg-white/90 text-black rounded-full hover:scale-110 transition delay-75">
+                    <Heart size={18} />
+                </button>
+
+                <button className="p-2 bg-white/90 text-black rounded-full hover:scale-110 transition delay-150">
+                    <Search size={18} />
+                </button>
+            </div>
+            {/* hover:scale-110  */}
+            <button className="absolute left-1/2 -translate-x-1/2 bottom-3 p-2 w-64 bg-white/90 text-black rounded-md transition delay-150">
+                Add to Cart
+            </button>
         </div>
     );
 };
