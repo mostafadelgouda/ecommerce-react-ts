@@ -1,0 +1,12 @@
+
+export interface Product {
+    product_id: number;
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+    brand: string;
+    rate: number | null;
+    main_image: string;
+    created_at: string;
+}
